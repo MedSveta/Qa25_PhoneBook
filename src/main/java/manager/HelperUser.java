@@ -29,11 +29,18 @@ public void  fillLoginRegistrationForm(String email, String password){
 //        passwordInput.sendKeys(password);
 
     type(By.name("email"), email);
-    type(By.xpath("//input[2]"), password);
+    type(By.xpath("//input[last()]"), password);
 
 }
 public  void submitLogin(){
         click(By.xpath("//button[text()='Login']"));
 }
 
+    public boolean isLogged() {
+        return isElementPresent(By.xpath("//button[text()='Sign Out']"));
+    }
+
+    public void logout() {
+        click(By.xpath("//button[text()='Sign Out']"));
+    }
 }
