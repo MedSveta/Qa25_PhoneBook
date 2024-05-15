@@ -9,6 +9,11 @@ public class User {
         return this;
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public User setPassword(String password) {
         this.password = password;
         return this;
