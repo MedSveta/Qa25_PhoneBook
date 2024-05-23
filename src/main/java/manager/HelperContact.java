@@ -29,4 +29,8 @@ public class HelperContact extends HelperBase{
     public boolean isTextInElementPresent_nameContact(String name){
         return isTextInElementPresent(By.xpath("//div[@class='contact-page_leftdiv__yhyke']/div/div[last()]/h2"), name);
     }
+
+    public boolean isAddPageStillDisplayed() {
+        return isElementPresent(By.cssSelector("a.active[href='/add']"));
+    }
 }
