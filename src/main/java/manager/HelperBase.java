@@ -49,4 +49,9 @@ public class HelperBase {
         }
         return false;
     }
+
+    public boolean isTextInElementPresent(By locator, String text){
+        WebElement element = wd.findElement(locator);
+        return element.getText().equals(text);
+    }
 }
