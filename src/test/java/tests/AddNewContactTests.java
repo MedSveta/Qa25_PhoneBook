@@ -19,6 +19,7 @@ public class AddNewContactTests extends TestBase{
 
     @Test
     public void addNewContactSuccessAll(){
+        int z = (int) (System.currentTimeMillis()/1000)%3600;
         Contact contact = Contact.builder()
                 .name(RandomMethods.randomName())
                 .lastName(RandomMethods.randomLastName())
@@ -29,6 +30,7 @@ public class AddNewContactTests extends TestBase{
                 .build();
         app.getHelperContact().openAddForm();
         app.getHelperContact().fillContactForm(contact);
+        app.getHelperContact().getScreen("src/test/screenshots/screen"+z+".png");
 
         app.getHelperContact().clickButtonSave();
 
