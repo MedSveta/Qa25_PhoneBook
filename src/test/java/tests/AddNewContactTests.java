@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderContacts;
 import models.Contact;
 import models.User;
 import org.testng.Assert;
@@ -87,15 +88,10 @@ public class AddNewContactTests extends TestBase{
 
         Assert.assertTrue(app.getHelperContact().isAddPageStillDisplayed());
     }
-    @Test void addNewContactWrongPhone(){
-        Contact contact = Contact.builder()
-                .name(RandomMethods.randomName())
-                .lastName(RandomMethods.randomLastName())
-                .phone(RandomMethods.randomPhone(7))
-                .email(RandomMethods.randomEmail())
-                .address("Haifa, st.Disengof")
-                .description("Wrong phone")
-                .build();
+    @Test (dataProvider ="contactWrongPhone", dataProviderClass = DataProviderContacts.class)
+    public void addNewContactWrongPhone(Contact contact){
+        logger.info("Tests run with data: --> "+contact.toString());
+
         app.getHelperContact().openAddForm();
         app.getHelperContact().fillContactForm(contact);
 
