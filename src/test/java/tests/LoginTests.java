@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderUser;
 import models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -19,12 +20,12 @@ public class LoginTests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "loginData")
-    public void loginSuccess() {
+    @Test(dataProvider = "loginData", dataProviderClass = DataProviderUser.class)
+    public void loginSuccess(String email, String password) {
         logger.info("Start test with name 'loginSuccess'");
-        logger.info("Test data --> : email:'sveta1234@gmail.com' & password: '1234567$Ru'");
+        logger.info("Test data --> : email: "+email+" & password: "+password);
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(new User("sveta1234@gmail.com", "1234567$Ru"));
+        app.getHelperUser().fillLoginRegistrationForm(email, password);
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isLogged());
@@ -40,22 +41,32 @@ public class LoginTests extends TestBase {
         return list.iterator();
     }
 
-    @Test
-    public void loginSuccessModel() {
-        logger.info("Test data --> : email:'sveta1234@gmail.com' & password: '1234567$Ru'");
+    @Test(dataProvider = "loginModels", dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModel(User user) {
+        logger.info("Test data --> : " +user.toString());
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(new User("sveta1234@gmail.com", "1234567$Ru"));
+        app.getHelperUser().fillLoginRegistrationForm(user);
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isLogged());
         logger.info("Assert check is Element button 'Sign out' present");
+    }
+    @Test(dataProvider = "loginFile", dataProviderClass = DataProviderUser.class)
+    public void loginSuccessModelDP(User user) {
+        logger.info("Test data --->: " +user.toString());
+        app.getHelperUser().openLoginRegistrationForm();
+        app.getHelperUser().fillLoginRegistrationForm(user);
+        app.getHelperUser().submitLogin();
+        Assert.assertTrue(app.getHelperUser().isLogged());
+        logger.info("Assert check is Element button 'Sing out' present");
+
     }
 
     @Test
     public void loginWrongEmail() {
         logger.info("Test data --> : email:'sveta1234gmail.com' & password: '1234567$Ru'");
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(new User("sveta1234gmail.com", "1234567$Ru"));
+        app.getHelperUser().fillLoginRegistrationForm("sveta1234gmail.com", "1234567$Ru");
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
@@ -66,7 +77,7 @@ public class LoginTests extends TestBase {
     public void loginWrongPassword() {
         logger.info("Test data --> : email:'sveta1234@gmail.com' & password: '1234567$ru'");
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(new User("sveta1234@gmail.com", "1234567$ru"));
+        app.getHelperUser().fillLoginRegistrationForm("sveta1234@gmail.com", "1234567$ru");
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
@@ -77,7 +88,7 @@ public class LoginTests extends TestBase {
     public void loginUnregisteredUser() {
         logger.info("Test data --> : email:'sveta1234rec@gmail.com' & password: '1234567$Su'");
         app.getHelperUser().openLoginRegistrationForm();
-        app.getHelperUser().fillLoginRegistrationForm(new User("sveta1234rec@gmail.com", "1234567$Su"));
+        app.getHelperUser().fillLoginRegistrationForm("sveta1234rec@gmail.com", "1234567$Su");
         app.getHelperUser().submitLogin();
 
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));

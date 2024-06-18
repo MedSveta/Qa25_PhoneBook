@@ -22,7 +22,7 @@ public class RegistrationTests extends TestBase{
         int i = new Random().nextInt(1000);
         int z = (int) (System.currentTimeMillis()/1000)%3600;
 
-        User user = new User("Bingo"+z+"@mail.com", "Qwerty123!");
+        User user = new User().withEmail("Bingo"+z+"@mail.com").withPassword("Qwerty123!");
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -37,7 +37,7 @@ public class RegistrationTests extends TestBase{
     @Test(description = "Bug report#12569")
     public void registrationWrongEmail(){
 
-        User user = new User("bingomail.com", "Qwerty123!");
+        User user = new User().withEmail("bingomail.com"). withPassword("Qwerty123!");
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -47,7 +47,7 @@ public class RegistrationTests extends TestBase{
     @Test
     public void registrationWrongPassword(){
 
-        User user = new User("bin@gomail.com", "Qwerty1");
+        User user = new User().withEmail("bin@gomail.com").withPassword("Qwerty1");
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);
@@ -57,7 +57,7 @@ public class RegistrationTests extends TestBase{
     @Test
     public void registrationExistUser(){
 
-        User user = new User("sveta1234@gmail.com", "1234567$Ru");
+        User user = new User().withEmail("sveta1234@gmail.com").withPassword("1234567$Ru");
 
         app.getHelperUser().openLoginRegistrationForm();
         app.getHelperUser().fillLoginRegistrationForm(user);

@@ -28,6 +28,24 @@ public void  fillLoginRegistrationForm(User user){
     logger.info("type in input with locator By.name(\"email\")");
 
 }
+    public void fillLoginRegistrationForm(String email, String password) {
+//        WebElement emailInput = wd.findElement(By.name("email"));
+//        emailInput.click();
+//        emailInput.clear();
+//        emailInput.sendKeys(email);
+        type(By.name("email"), email);
+        logger.info("type in input with locator By.name(\"email\")");
+
+//        WebElement passwordInput = wd.findElement(By.xpath("//input[last()]"));
+//        passwordInput.click();
+//        passwordInput.clear();
+//        passwordInput.sendKeys(password);
+        type(By.xpath("//input[last()]"), password);
+
+
+
+    }
+
 public  void submitLogin(){
         click(By.xpath("//button[text()='Login']"));
 }

@@ -20,21 +20,6 @@ public class DataProviderUser {
     @DataProvider
     public Iterator<Object[]> loginFile() throws IOException {
         List<Object[]> list = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/test.csv")));
-        String line = reader.readLine(); // "sveta1234@gmail.com,1234567$Ru"
-
-        while (line!=null){
-            String[] all =line.split(",");
-            list.add(new Object[]{new User().getEmail(all[0]).getPassword(all[1])});
-            line = reader.readLine();
-        }
-        return list.iterator();
-    }
-
-
-    @DataProvider
-    public Iterator<Object[]> loginFile() throws IOException {
-        List<Object[]> list = new ArrayList<>();
         //read from file ---> add to list
         BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/data.csv")));
         String line = reader.readLine();//"mara@gmail.com,Mmar123456$"
@@ -64,6 +49,5 @@ public class DataProviderUser {
         list.add(new Object[]{new User().withEmail("mara@gmail.com").withPassword("Mmar123456$")});
         return list.iterator();
     }
-
 
 }

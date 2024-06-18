@@ -14,29 +14,35 @@ public class AddNewContactTests extends TestBase{
     @BeforeClass
     public void preCondition(){
         if (!app.getHelperUser().isLogged()){
-            app.getHelperUser().login(new User("sveta1234@gmail.com","1234567$Ru"));
+            app.getHelperUser().login(new User().withEmail("sveta1234@gmail.com").withPassword("1234567$Ru"));
         }
     }
 
-    @Test
-    public void addNewContactSuccessAll(){
-        int z = (int) (System.currentTimeMillis()/1000)%3600;
-        Contact contact = Contact.builder()
-                .name(RandomMethods.randomName())
-                .lastName(RandomMethods.randomLastName())
-                .phone(RandomMethods.randomPhone(10))
-                .email(RandomMethods.randomEmail())
-                .address("Haifa, st.Disengof")
-                .description("All fields")
-                .build();
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContacts.class,invocationCount = 3)
+    public void addNewContactSuccessAll(Contact contact){
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
+
+        logger.info("Tests run with data: --->" + contact.toString());
         app.getHelperContact().openAddForm();
         app.getHelperContact().fillContactForm(contact);
-        app.getHelperContact().getScreen("src/test/screenshots/screen"+z+".png");
-
+        app.getHelperContact().getScreen("src/test/screenshots/screen-" + i + ".png");
         app.getHelperContact().clickButtonSave();
-
         Assert.assertTrue(app.getHelperContact().isTextInElementPresent_nameContact(contact.getName()));
         Assert.assertTrue(app.getHelperContact().isContactAddedByPhone(contact.getPhone()));
+
+    }
+    @Test(dataProvider = "contactCSV", dataProviderClass = DataProviderContacts.class)
+    public void addContactSuccessAllFieldsCSV(Contact contact) {
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
+
+        logger.info("Tests run with data: --->" + contact.toString());
+        app.getHelperContact().openAddForm();
+        app.getHelperContact().fillContactForm(contact);
+        app.getHelperContact().getScreen("src/test/screenshots/screen-" + i + ".png");
+        app.getHelperContact().clickButtonSave();
+        Assert.assertTrue(app.getHelperContact().isTextInElementPresent_nameContact(contact.getName()));
+        Assert.assertTrue(app.getHelperContact().isContactAddedByPhone(contact.getPhone()));
+
     }
     @Test
     public void addNewContactSuccess_WODescription(){
